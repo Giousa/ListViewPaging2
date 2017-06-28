@@ -26,6 +26,7 @@ public class MyListAdapter extends BaseAdapter {
     private int mCurrentPage = 0;
     private int mSize = 0;
     private OnListItemClickListener mOnListItemClickListener;
+    private int checkedLayout = -1;
 
     public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
         mOnListItemClickListener = onListItemClickListener;
@@ -83,11 +84,19 @@ public class MyListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     System.out.println("当前选中的position = "+currentPosition);
+                    checkedLayout = currentPosition;
+                    notifyDataSetChanged();
                     if(mOnListItemClickListener != null){
                         mOnListItemClickListener.OnItemClickListener(currentPosition);
                     }
                 }
             });
+        }
+
+        if(checkedLayout == currentPosition){
+            holder.mDeviceItem.setBackgroundResource(R.drawable.shape_rectangle_blue);
+        }else {
+            holder.mDeviceItem.setBackgroundResource(R.drawable.shape_rectangle);
         }
 
         return convertView;
