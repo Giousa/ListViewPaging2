@@ -25,6 +25,11 @@ public class MyListAdapter extends BaseAdapter {
     private int mItemCount = 3;
     private int mCurrentPage = 0;
     private int mSize = 0;
+    private OnListItemClickListener mOnListItemClickListener;
+
+    public void setOnListItemClickListener(OnListItemClickListener onListItemClickListener) {
+        mOnListItemClickListener = onListItemClickListener;
+    }
 
     public MyListAdapter(Context context, List<String> deviceNames) {
         mContext = context;
@@ -78,6 +83,9 @@ public class MyListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     System.out.println("当前选中的position = "+currentPosition);
+                    if(mOnListItemClickListener != null){
+                        mOnListItemClickListener.OnItemClickListener(currentPosition);
+                    }
                 }
             });
         }
@@ -124,5 +132,9 @@ public class MyListAdapter extends BaseAdapter {
             Toast.makeText(mContext,"已经是最后一页",Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    public interface OnListItemClickListener{
+        void OnItemClickListener(int index);
     }
 }
